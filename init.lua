@@ -421,11 +421,14 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>ss', builtin.treesitter, { desc = '[S]earch [S]elect Telescope' })
+      vim.keymap.set('n', '<leader>ss', function()
+        builtin.treesitter { symbols = 'function' }
+      end, { desc = 'Search symbols' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+      -- vim.keymap.set('n', '<leader>sr', builtin., { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
       vim.keymap.set('n', '<leader>si', '<cmd>Telescope hierarchy incoming_calls<cr>', { desc = 'Show incoming call hieracrchy' })
@@ -455,7 +458,26 @@ require('lazy').setup({
       end, { desc = '[S]earch [N]eovim files' })
     end,
   },
+  {
+    'akinsho/toggleterm.nvim',
+    config = function()
+      require('toggleterm').setup {}
+      local Terminal = require('toggleterm.terminal').Terminal
+      local lazygit = Terminal:new {
+        cmd = 'lazygit',
+        hidden = true,
+        direction = 'float',
+        -- float_opts = {
+        --  border = 'double',
+        --},
+      }
 
+      function _lazygit_toggle()
+        lazygit:toggle()
+      end
+      vim.api.nvim_set_keymap('n', '<leader>v', '<cmd>lua _lazygit_toggle()<CR>', { noremap = true, silent = true })
+    end,
+  },
   -- LSP Plugins
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -1209,7 +1231,6 @@ require('lazy').setup({
         'regex',
         'rust',
         'sql',
-        'sway',
         'xml',
       },
       -- Autoinstall languages that are not installed
