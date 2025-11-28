@@ -897,8 +897,9 @@ require('lazy').setup({
       local servers = {
         clangd = {},
         -- bitbake_ls = {},
-        -- gopls = {},
-        -- pyright = {},
+        gopls = {},
+        pyright = {},
+        textlsp = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
