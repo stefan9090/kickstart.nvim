@@ -761,14 +761,14 @@ require('lazy').setup({
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
-          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          map('<leader>gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
           -- Find references for the word under your cursor.
-          map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          map('<leader>gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
           -- Jump to the implementation of the word under your cursor.
           --  Useful when your language has ways of declaring types without an actual implementation.
-          map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+          map('<leader>gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
@@ -1132,30 +1132,41 @@ require('lazy').setup({
       vim.cmd 'colorscheme jb'
     end,
   },
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'marko-cerovac/material.nvim',
-    priority = 1001, -- Make sure to load this before all the other start plugins.
+  --{ -- You can easily change to a different colorscheme.
+  -- Change the name of the colorscheme plugin below, and then
+  -- change the command in the config to whatever the name of that colorscheme is.
+  --
+  -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  -- 'marko-cerovac/material.nvim',
+  --priority = 1001, -- Make sure to load this before all the other start plugins.
+  --config = function()
+  ---@diagnostic disable-next-line: missing-fields:
+  --require('material').setup {
+  --styles = {
+  --comments = { italic = false }, -- Disable italics in comments
+  --},
+  --}
+
+  -- vim.g.material_style = 'darker'
+
+  -- Load the colorscheme here.
+  -- Like many other themes, this one has different styles, and you could load
+  -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  -- vim.cmd.colorscheme 'material'
+  -- end,
+  -- },
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1001,
     config = function()
-      ---@diagnostic disable-next-line: missing-fields:
-      require('material').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
+      require('catppuccin').setup {
+        flavour = 'mocha',
       }
 
-      vim.g.material_style = 'darker'
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'material'
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
-
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
